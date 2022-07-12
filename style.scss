@@ -1,0 +1,87 @@
+@function random-hex() {
+    $rgb: "";
+    $i: 6;
+
+    @while $i >0 {
+        $code: random(16);
+        $letters: A,
+        B,
+        C,
+        D,
+        E,
+        F;
+
+        @if $code >9 {
+            $code: nth($letters, random(6));
+        }
+
+        $rgb: str-insert($rgb, "" +$code, 0);
+
+        $i: $i - 1;
+    }
+
+    @return unquote("#" +$rgb);
+}
+
+@mixin bounce($start, $distance) {
+    @keyframes bounce {
+        0% {
+            top: $start
+        }
+        40% {
+            top: $distance
+        }
+        60% {
+            top: $distance / 2
+        }
+        100% {
+            top: $start
+        }
+    }
+}
+
+body {
+    height: 100vh;
+}
+
+.bounce{
+    margin: 2rem;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    border-radius: 50%;
+    animation: bounce 2s infinite;
+
+    @include bounce(0, 30px);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.col {
+    height: 100%;
+    width: 10%;
+
+    $i: 0;
+
+    @while $i<12 {
+        &:nth-child(#{$i+1}) {
+            background-color: random-hex();
+        }
+        $i: $i+1;
+    }
+
+}
+
+.bg-random {
+    $i:0;
+    @while $i<12 {
+      &:nth-child(#{$i+1}) {
+        background-color: random-hex();
+      }
+      $i: $i+1;
+    }
+}
